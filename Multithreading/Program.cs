@@ -11,8 +11,30 @@ namespace Multithreading
             //task1PingPong();
             //task2ThreadPool();
 
-            Console.WriteLine("AsyncCount");
-            ProcessDataAsync();
+            //Console.WriteLine("AsyncCount");
+            //ProcessDataAsync();
+
+            
+            testThreadSafeStringBuilder();
+        }
+
+        public static void testThreadSafeStringBuilder()
+        {
+            TheadSafeStringBuffer theadSafeStringBuffer = new TheadSafeStringBuffer();
+
+            Thread t1 = new Thread(() => theadSafeStringBuffer.append("1"));
+            Thread t2 = new Thread(() => theadSafeStringBuffer.append("2"));
+            Thread t3 = new Thread(() => theadSafeStringBuffer.append("3"));
+
+            t1.Start();
+            t2.Start();
+            t3.Start();
+
+            t1.Join();
+            t2.Join();
+            t3.Join();
+
+            Console.WriteLine(theadSafeStringBuffer.String);
         }
 
         private static void task1PingPong()
